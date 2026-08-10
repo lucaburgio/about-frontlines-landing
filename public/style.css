@@ -47,7 +47,7 @@ body {
   background: var(--color-bg);
   color: var(--color-dark);
   font-family: 'Disket Mono', 'Courier New', monospace;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.5;
   overflow-x: hidden;
 }
@@ -71,7 +71,7 @@ h1, h2, h3 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  line-height: 0.9;
 }
 
 .eyebrow {
@@ -103,7 +103,7 @@ h1, h2, h3 {
 
 .button-primary {
   background: var(--color-dark);
-  color: var(--color-light);
+  color: var(--color-white);
   border: 2px solid var(--color-dark);
 }
 
@@ -122,8 +122,10 @@ h1, h2, h3 {
 /* ── Header ──────────────────────────────────────────────────────────── */
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 20;
   display: flex;
   align-items: center;
@@ -131,8 +133,12 @@ h1, h2, h3 {
   padding: 24px 0;
   background: rgba(239, 240, 240, 0.88);
   backdrop-filter: blur(6px);
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.site-header:not(.scrolled) {
+  background: linear-gradient(0deg, transparent, var(--color-gray-100));
+  backdrop-filter: none;
 }
 
 .site-header.scrolled {
@@ -172,6 +178,7 @@ h1, h2, h3 {
 .site-nav .button-primary {
   padding: 10px 20px;
   font-size: 12px;
+  color: var(--color-white);
 }
 
 .nav-toggle { display: none; }
@@ -179,25 +186,48 @@ h1, h2, h3 {
 /* ── Hero ────────────────────────────────────────────────────────────── */
 
 .hero {
-  padding: 88px 0 64px;
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
-.hero .container {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 56px;
-  align-items: center;
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, var(--color-bg) 0%, rgba(239, 240, 240, 0.85) 32%, rgba(239, 240, 240, 0.25) 58%, rgba(239, 240, 240, 0) 75%);
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-copy {
+  max-width: 620px;
 }
 
 .hero-copy h1 {
   font-size: clamp(40px, 5.2vw, 68px);
-  margin-bottom: 20px;
+  margin: 40px 0;
 }
 
-.hero-copy h1 .accent { color: var(--color-yellow-900); }
+.hero-copy h1 .accent { color: var(--color-yellow-500); }
 
 .hero-copy p {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--color-gray-700);
   max-width: 46ch;
   margin-bottom: 32px;
@@ -227,31 +257,6 @@ h1, h2, h3 {
   width: 6px;
   height: 6px;
   background: var(--color-yellow-500);
-}
-
-.hero-art {
-  position: relative;
-  border: 2px solid var(--color-dark);
-}
-
-.hero-art img {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-
-.hero-art-tag {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background: var(--color-dark);
-  color: var(--color-light);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 8px 14px;
 }
 
 /* ── News / beta banner (mirrors the main-menu news card) ──────────────── */
@@ -304,7 +309,7 @@ h1, h2, h3 {
 
 /* ── Section shell ───────────────────────────────────────────────────── */
 
-section { padding: 64px 0; }
+section { padding: 64px 0; scroll-margin-top: 84px; }
 
 .section-head {
   margin-bottom: 44px;
@@ -498,7 +503,7 @@ section { padding: 64px 0; }
   color: var(--color-gray-600);
 }
 
-.footer-brand img { height: 20px; width: auto; }
+.footer-brand img { height: 40px; width: auto; }
 
 .footer-links {
   display: flex;
@@ -518,8 +523,10 @@ section { padding: 64px 0; }
 /* ── Responsive ──────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
-  .hero .container { grid-template-columns: 1fr; }
-  .hero-art { order: -1; }
+  .hero-copy { max-width: none; }
+  .hero-scrim {
+    background: linear-gradient(180deg, rgba(239, 240, 240, 0.92) 0%, rgba(239, 240, 240, 0.86) 55%, rgba(239, 240, 240, 0.7) 100%);
+  }
   .modes-grid { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .news-card { flex-direction: column; }
