@@ -137,7 +137,7 @@ h1, h2, h3 {
 }
 
 .site-header:not(.scrolled) {
-  background: linear-gradient(0deg, transparent, var(--color-gray-100));
+  background: var(--color-light);
   backdrop-filter: none;
 }
 
@@ -156,7 +156,7 @@ h1, h2, h3 {
   align-items: center;
 }
 
-.brand img { height: 28px; width: auto; }
+.brand img { height: 40px; width: auto; }
 
 .site-nav {
   display: flex;
@@ -196,6 +196,7 @@ h1, h2, h3 {
 
 .hero-bg-video {
   position: absolute;
+  margin-left: 20%;
   inset: 0;
   width: 100%;
   height: 100%;
